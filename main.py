@@ -18,16 +18,23 @@ def rotate(x, y, theta):
     return x_rotated, y_rotated
 
 
+def n_fold(x, y, n):
+    result = [rotate(x, y, theta) for theta in np.linspace(0, 2 * np.pi, n, endpoint=False)]
+    return result
+
+
 if __name__ == '__main__':
     N = 1000
+    num_pedals = 5
     a1 = 1.5
     a2 = 0.5
 
     x_orig = np.linspace(-1, 1, N)
     x_pedal, y_pedal = pedal(x_orig, a1, a2)
-    x_rotated, y_rotated = rotate(x_pedal, y_pedal, np.pi / 3)
+    result = n_fold(x_pedal, y_pedal, num_pedals)
 
-    plt.plot(x_rotated, y_rotated)
-    plt.fill(x_rotated, y_rotated, color='pink', alpha=0.5)
+    for i in range(num_pedals):
+        plt.plot(result[i][0], result[i][1])
+        plt.fill(result[i][0], result[i][1], color='pink', alpha=0.5)
     plt.axis('equal')
     plt.show()
