@@ -25,28 +25,20 @@ def n_fold(x, y, n):
 
 if __name__ == '__main__':
     N = 1000
-    num_pedals = 5
-    a1 = 1.5
+    num_pedals = 3
+    a1 = 0.8
     a2 = 0.5
     a3 = 1
-
-    # x_orig = np.linspace(-1, 1, N)
-    # x_pedal, y_pedal = pedal(x_orig, a1, a2)
-    # result = n_fold(x_pedal, y_pedal, num_pedals)
-    #
-    # for i in range(num_pedals):
-    #     plt.plot(result[i][0], result[i][1])
-    #     plt.fill(result[i][0], result[i][1], color='pink', alpha=0.5)
-    # plt.axis('equal')
-    # plt.show()
 
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    x = np.linspace(-1, 1, N)
-    x_pedal, y_pedal = pedal(x, a1, a2)
-    z = a3 * (x_pedal ** 2 + y_pedal ** 2)
+    x_orig = np.linspace(-1, 1, N)
+    x_pedal, y_pedal = pedal(x_orig, a1, a2)
+    result = n_fold(x_pedal, y_pedal, num_pedals)
 
-    ax.plot3D(x_pedal, y_pedal, z, color='purple')
+    for i in range(num_pedals):
+        z = a3 * (result[i][0] ** 2 + result[i][1] ** 2)
+        ax.plot3D(result[i][0], result[i][1], z, color='purple')
     plt.axis('equal')
     plt.show()
