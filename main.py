@@ -44,11 +44,9 @@ if __name__ == '__main__':
     ax = fig.add_subplot(111, projection='3d')
 
     x = np.linspace(-1, 1, N)
-    y = np.linspace(-1, 1, N)
-    X, Y = np.meshgrid(x, y)
-    Z = a3 * (X ** 2 + Y ** 2)
-    Z[X ** 2 + Y ** 2 > 1] = np.nan
+    x_pedal, y_pedal = pedal(x, a1, a2)
+    z = a3 * (x_pedal ** 2 + y_pedal ** 2)
 
-    ax.plot_surface(X, Y, Z, cmap='viridis')
+    ax.plot3D(x_pedal, y_pedal, z, color='purple')
     plt.axis('equal')
     plt.show()
