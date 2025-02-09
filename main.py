@@ -52,20 +52,25 @@ def leaf(starting_z, a, b, phi, num_points):
 
 if __name__ == '__main__':
     N = 1000  # number of points in each np.linspace
-    num_pedals = 5
-    a1 = 1 / 4
-    a2 = a1 / 3
-    a3 = 1 / 4
-    c = np.sqrt(10 / a3)
+    num_pedals = 5  # number of pedals in a single layer
+    num_layers = 5  # number of layers
+    a1s = np.linspace(1, 10, num_layers) / 4  # param for pedal lower part
+    a2s = a1s / 3  # param for pedal upper part
+    a3s = np.linspace(1, 10, num_layers) / 10  # param for layer
+    cs = np.sqrt(10 / a3s) * np.linspace(1, 1.25, num_layers)  # param for pedal size
 
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
 
-    x_pedal, y_pedal = pedal(a1, a2, c, N)
-    result = n_fold(x_pedal, y_pedal, num_pedals)
-    for i in range(num_pedals):
-        z = a3 * (result[i][0] ** 2 + result[i][1] ** 2)
-        ax.plot3D(result[i][0], result[i][1], z)
+    for j in range(num_layers):
+        # for each layer
+        # draw a 2d pedal
+        x_pedal, y_pedal = pedal(a1s[j], a2s[j], cs[j], N)
+        # draw n 2d pedals and rotate them
+        result = n_fold(x_pedal, y_pedal, num_pedals)
+        for i in range(num_pedals):
+            z = a3s[j] * (result[i][0] ** 2 + result[i][1] ** 2)
+            ax.plot3D(result[i][0], result[i][1], z)
 
     ax.set_title("3D Flower")
     ax.set_xlabel("X-axis")
