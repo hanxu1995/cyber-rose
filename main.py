@@ -36,6 +36,14 @@ def stem(length, radius, num_points):
     return x, y, z
 
 
+def leaf(starting_z, a, b, phi, num_points):
+    t = np.linspace(0, 2 * np.pi, num_points)
+    x = a + a * np.cos(t)
+    y = b * np.sin(t)
+    z = starting_z + np.sqrt(x ** 2 + y ** 2) * np.cos(phi) / np.sin(phi)
+    return x, y, z
+
+
 if __name__ == '__main__':
     N = 1000
     num_pedals = 5
@@ -68,6 +76,12 @@ if __name__ == '__main__':
             ax.add_collection3d(poly)
     x_stem, y_stem, z_stem = stem(stem_height, stem_radius, N)
     ax.plot_surface(x_stem, y_stem, z_stem, color='green', alpha=0.8)
+
+    # leaf
+    x_leaf, y_leaf, z_leaf = leaf(-20 / 3, 3, 1.2, np.pi / 4, N)
+    verts_leaf = [list(zip(x_leaf, y_leaf, z_leaf))]
+    poly_leaf = Poly3DCollection(verts_leaf, facecolors='darkgreen', alpha=0.8, edgecolor='gold', linewidths=1.5)
+    ax.add_collection3d(poly_leaf)
 
     ax.set_title("3D Flower")
     ax.set_xlabel("X-axis")
