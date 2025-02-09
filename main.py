@@ -96,6 +96,12 @@ if __name__ == '__main__':
     x_stem, y_stem, z_stem = stem(stem_length, stem_radius, N)
     ax.plot_surface(x_stem, y_stem, z_stem, color='green', alpha=0.8)
 
+    # leaf
+    x_leaf, y_leaf, z_leaf = leaf(leaf_z, leaf_a, leaf_b, leaf_phi, N)
+    verts_leaf = [list(zip(x_leaf, y_leaf, z_leaf))]
+    poly_leaf = Poly3DCollection(verts_leaf, facecolors='darkgreen', alpha=0.8, edgecolor='gold', linewidths=1.5)
+    ax.add_collection3d(poly_leaf)
+
     ax.set_title("3D Flower")
     ax.set_xlabel("X-axis")
     ax.set_ylabel("Y-axis")
