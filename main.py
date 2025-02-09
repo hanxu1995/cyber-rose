@@ -29,16 +29,17 @@ def n_fold(x, y, n, turn=False):
 if __name__ == '__main__':
     N = 1000
     num_pedals = 3
-    a1s = [3, 4, 5]
-    a2s = [2, 2.67, 3.33]
-    a3s = [2.5, 3, 3.5]
-    cs = [2, 1.914, 1.857]
+    num_layers = 5
+    a1s = np.linspace(1, 10, num_layers) / 3
+    a2s = a1s / 3
+    a3s = np.linspace(1, 10, num_layers) / 3
+    cs = np.sqrt(10 / a3s) * np.linspace(1, 1.25, num_layers)
 
-    fig = plt.figure(figsize=(8, 6))
+    fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    colors = plt.cm.viridis(np.linspace(0, 1, len(a3s)))
+    colors = plt.cm.plasma(np.linspace(0, 1, num_layers))
 
-    for j in range(len(a1s)):
+    for j in range(num_layers):
         x_pedal, y_pedal = pedal(a1s[j], a2s[j], cs[j], N)
         result = n_fold(x_pedal, y_pedal, num_pedals, turn=j % 2 == 1)
         for i in range(num_pedals):
@@ -49,5 +50,4 @@ if __name__ == '__main__':
     ax.set_xlabel("X-axis")
     ax.set_ylabel("Y-axis")
     ax.set_zlabel("Z-axis")
-    ax.view_init(elev=30, azim=45)
     plt.show()
