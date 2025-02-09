@@ -55,10 +55,12 @@ if __name__ == '__main__':
     a1 = 1
     a2 = 1 / 3
     c = 3.162
+    theta = np.pi / 3
 
     x_pedal, y_pedal = pedal(a1, a2, c, N)
-    plt.plot(x_pedal, y_pedal)
-    plt.fill(x_pedal, y_pedal, color='pink', alpha=0.5)
+    x_rotated, y_rotated = rotate(x_pedal, y_pedal, theta)
+    plt.plot(x_rotated, y_rotated)
+    plt.fill(x_rotated, y_rotated, color='pink', alpha=0.5)
 
     plt.axis('scaled')
     plt.show()
