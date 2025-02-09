@@ -6,9 +6,9 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 
 # single 2d pedal
-def pedal(a1, a2, c, N):
+def pedal(a1, a2, c, num_points):
     x_max = np.sqrt(c / (a1 + a2))
-    x = np.linspace(-x_max, x_max, N)
+    x = np.linspace(-x_max, x_max, num_points)
     y1 = a1 * x ** 2
     y2 = -a2 * x ** 2 + c
     x_concat = np.concatenate([x, x[::-1]])
@@ -56,6 +56,10 @@ if __name__ == '__main__':
     num_layers = 5  # number of layers
     stem_length = 20  # length of stem
     stem_radius = 0.4  # radius of stem
+    leaf_z = -20 / 3  # leaf location
+    leaf_a = 3  # leaf half length
+    leaf_b = 1.2  # leaf half width
+    leaf_phi = np.pi / 4  # leaf angle
     a1s = np.linspace(1, 10, num_layers) / 4  # param for pedal lower part
     a2s = a1s / 3  # param for pedal upper part
     a3s = np.linspace(1, 10, num_layers) / 10  # param for layer
@@ -93,7 +97,7 @@ if __name__ == '__main__':
     ax.plot_surface(x_stem, y_stem, z_stem, color='green', alpha=0.8)
 
     # leaf
-    x_leaf, y_leaf, z_leaf = leaf(-20 / 3, 3, 1.2, np.pi / 4, N)
+    x_leaf, y_leaf, z_leaf = leaf(leaf_z, leaf_a, leaf_b, leaf_phi, N)
     verts_leaf = [list(zip(x_leaf, y_leaf, z_leaf))]
     poly_leaf = Poly3DCollection(verts_leaf, facecolors='darkgreen', alpha=0.8, edgecolor='gold', linewidths=1.5)
     ax.add_collection3d(poly_leaf)
