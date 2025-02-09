@@ -2,6 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 
 def pedal(a1, a2, c, N):
@@ -44,7 +45,9 @@ if __name__ == '__main__':
         result = n_fold(x_pedal, y_pedal, num_pedals, turn=j % 2 == 1)
         for i in range(num_pedals):
             z = a3s[j] * (result[i][0] ** 2 + result[i][1] ** 2)
-            ax.plot3D(result[i][0], result[i][1], z, color=colors[j])
+            verts = [list(zip(result[i][0], result[i][1], z))]
+            poly = Poly3DCollection(verts, facecolors=colors[j], alpha=0.8)
+            ax.add_collection3d(poly)
 
     ax.set_title("3D Layered Pedal Flower")
     ax.set_xlabel("X-axis")
