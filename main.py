@@ -52,15 +52,16 @@ def leaf(starting_z, a, b, phi, num_points):
 
 if __name__ == '__main__':
     N = 1000  # number of points in each np.linspace
+    num_pedals = 5
     a1 = 1
     a2 = 1 / 3
     c = 3.162
-    theta = np.pi / 3
 
     x_pedal, y_pedal = pedal(a1, a2, c, N)
-    x_rotated, y_rotated = rotate(x_pedal, y_pedal, theta)
-    plt.plot(x_rotated, y_rotated)
-    plt.fill(x_rotated, y_rotated, color='pink', alpha=0.5)
+    result = n_fold(x_pedal, y_pedal, num_pedals)
+    for i in range(num_pedals):
+        plt.plot(result[i][0], result[i][1])
+        plt.fill(result[i][0], result[i][1], color='pink', alpha=0.5)
 
     plt.axis('scaled')
     plt.show()
