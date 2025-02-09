@@ -27,16 +27,27 @@ def n_fold(x, y, n, turn=False):
     return result
 
 
+def stem(length, radius, num_points):
+    z = np.linspace(0, -length, num_points)
+    theta = np.linspace(0, 2 * np.pi, num_points)
+    z, theta = np.meshgrid(z, theta)
+    x = radius * np.cos(theta)
+    y = radius * np.sin(theta)
+    return x, y, z
+
+
 if __name__ == '__main__':
     N = 1000
     num_pedals = 5
     num_layers = 5
-    a1s = np.linspace(1, 10, num_layers) / 2
+    stem_height = 20
+    stem_radius = 0.4
+    a1s = np.linspace(1, 10, num_layers) / 4
     a2s = a1s / 3
-    a3s = np.linspace(1, 10, num_layers) / 2
+    a3s = np.linspace(1, 10, num_layers) / 10
     cs = np.sqrt(10 / a3s) * np.linspace(1, 1.25, num_layers)
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
     colors = [
         (0.9, 0.4, 0.5),
@@ -55,9 +66,16 @@ if __name__ == '__main__':
             verts = [list(zip(result[i][0], result[i][1], z))]
             poly = Poly3DCollection(verts, facecolors=colors[j], alpha=alphas[j], edgecolor='gold', linewidths=1.5)
             ax.add_collection3d(poly)
+    x_stem, y_stem, z_stem = stem(stem_height, stem_radius, N)
+    ax.plot_surface(x_stem, y_stem, z_stem, color='green', alpha=0.8)
 
-    ax.set_title("3D Layered Pedal Flower")
+    ax.set_title("3D Flower")
     ax.set_xlabel("X-axis")
     ax.set_ylabel("Y-axis")
     ax.set_zlabel("Z-axis")
+    ax.set_xlim([-10, 10])
+    ax.set_ylim([-10, 10])
+    ax.set_zlim([-25, 20])
+    ax.set_box_aspect([1, 1, 1])
+    plt.axis('scaled')
     plt.show()
