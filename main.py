@@ -38,7 +38,14 @@ if __name__ == '__main__':
 
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    colors = plt.cm.plasma(np.linspace(0, 1, num_layers))
+    colors = [
+        (0.9, 0.4, 0.5),
+        (0.8, 0.3, 0.4),
+        (0.7, 0.2, 0.3),
+        (0.6, 0.1, 0.2),
+        (0.5, 0.0, 0.1)
+    ]
+    alphas = np.linspace(0.6, 0.9, num_layers)
 
     for j in range(num_layers):
         x_pedal, y_pedal = pedal(a1s[j], a2s[j], cs[j], N)
@@ -46,7 +53,7 @@ if __name__ == '__main__':
         for i in range(num_pedals):
             z = a3s[j] * (result[i][0] ** 2 + result[i][1] ** 2)
             verts = [list(zip(result[i][0], result[i][1], z))]
-            poly = Poly3DCollection(verts, facecolors=colors[j], alpha=0.8)
+            poly = Poly3DCollection(verts, facecolors=colors[j], alpha=alphas[j], edgecolor='gold', linewidths=1.5)
             ax.add_collection3d(poly)
 
     ax.set_title("3D Layered Pedal Flower")
