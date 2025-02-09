@@ -53,15 +53,27 @@ def leaf(starting_z, a, b, phi, num_points):
 if __name__ == '__main__':
     N = 1000  # number of points in each np.linspace
     num_pedals = 5
-    a1 = 1
-    a2 = 1 / 3
-    c = 3.162
+    a1 = 1 / 4
+    a2 = a1 / 3
+    a3 = 1 / 4
+    c = np.sqrt(10 / a3)
+
+    fig = plt.figure(figsize=(8, 8))
+    ax = fig.add_subplot(111, projection='3d')
 
     x_pedal, y_pedal = pedal(a1, a2, c, N)
     result = n_fold(x_pedal, y_pedal, num_pedals)
     for i in range(num_pedals):
-        plt.plot(result[i][0], result[i][1])
-        plt.fill(result[i][0], result[i][1], color='pink', alpha=0.5)
+        z = a3 * (result[i][0] ** 2 + result[i][1] ** 2)
+        ax.plot3D(result[i][0], result[i][1], z)
 
+    ax.set_title("3D Flower")
+    ax.set_xlabel("X-axis")
+    ax.set_ylabel("Y-axis")
+    ax.set_zlabel("Z-axis")
+    ax.set_xlim([-10, 10])
+    ax.set_ylim([-10, 10])
+    ax.set_zlim([-25, 20])
+    ax.set_box_aspect([1, 1, 1])
     plt.axis('scaled')
     plt.show()
