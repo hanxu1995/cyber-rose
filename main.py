@@ -54,6 +54,12 @@ if __name__ == '__main__':
     N = 1000  # number of points in each np.linspace
     num_pedals = 5  # number of pedals in a single layer
     num_layers = 5  # number of layers
+    stem_length = 20  # length of stem
+    stem_radius = 0.4  # radius of stem
+    leaf_z = -20 / 3  # leaf location
+    leaf_a = 3  # leaf half length
+    leaf_b = 1.2  # leaf half width
+    leaf_phi = np.pi / 4  # leaf angle
     a1s = np.linspace(1, 10, num_layers) / 4  # param for pedal lower part
     a2s = a1s / 3  # param for pedal upper part
     a3s = np.linspace(1, 10, num_layers) / 10  # param for layer
@@ -61,6 +67,16 @@ if __name__ == '__main__':
 
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
+    # rose-red colors
+    colors = [
+        (0.9, 0.4, 0.5),
+        (0.8, 0.3, 0.4),
+        (0.7, 0.2, 0.3),
+        (0.6, 0.1, 0.2),
+        (0.5, 0.0, 0.1)
+    ]
+    # opacity
+    alphas = np.linspace(0.6, 0.9, num_layers)
 
     for j in range(num_layers):
         # for each layer
@@ -69,8 +85,13 @@ if __name__ == '__main__':
         # draw n 2d pedals and rotate them
         result = n_fold(x_pedal, y_pedal, num_pedals, turn=j % 2 == 1)
         for i in range(num_pedals):
+            # for each pedal
+            # map the 2d pedal onto a 3d paraboloid
             z = a3s[j] * (result[i][0] ** 2 + result[i][1] ** 2)
-            ax.plot3D(result[i][0], result[i][1], z)
+            # add color and opacity for the 3d pedal
+            verts = [list(zip(result[i][0], result[i][1], z))]
+            poly = Poly3DCollection(verts, facecolors=colors[j], alpha=alphas[j], edgecolor='gold', linewidths=1.5)
+            ax.add_collection3d(poly)
 
     ax.set_title("3D Flower")
     ax.set_xlabel("X-axis")
