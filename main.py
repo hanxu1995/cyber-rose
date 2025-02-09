@@ -92,6 +92,9 @@ if __name__ == '__main__':
             verts = [list(zip(result[i][0], result[i][1], z))]
             poly = Poly3DCollection(verts, facecolors=colors[j], alpha=alphas[j], edgecolor='gold', linewidths=1.5)
             ax.add_collection3d(poly)
+    # stem
+    x_stem, y_stem, z_stem = stem(stem_length, stem_radius, N)
+    ax.plot_surface(x_stem, y_stem, z_stem, color='green', alpha=0.8)
 
     ax.set_title("3D Flower")
     ax.set_xlabel("X-axis")
