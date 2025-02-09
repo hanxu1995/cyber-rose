@@ -29,11 +29,11 @@ def n_fold(x, y, n, turn=False):
 
 if __name__ == '__main__':
     N = 1000
-    num_pedals = 3
+    num_pedals = 5
     num_layers = 5
-    a1s = np.linspace(1, 10, num_layers) / 3
+    a1s = np.linspace(1, 10, num_layers) / 2
     a2s = a1s / 3
-    a3s = np.linspace(1, 10, num_layers) / 3
+    a3s = np.linspace(1, 10, num_layers) / 2
     cs = np.sqrt(10 / a3s) * np.linspace(1, 1.25, num_layers)
 
     fig = plt.figure()
