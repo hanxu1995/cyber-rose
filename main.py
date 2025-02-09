@@ -67,7 +67,7 @@ if __name__ == '__main__':
         # draw a 2d pedal
         x_pedal, y_pedal = pedal(a1s[j], a2s[j], cs[j], N)
         # draw n 2d pedals and rotate them
-        result = n_fold(x_pedal, y_pedal, num_pedals)
+        result = n_fold(x_pedal, y_pedal, num_pedals, turn=j % 2 == 1)
         for i in range(num_pedals):
             z = a3s[j] * (result[i][0] ** 2 + result[i][1] ** 2)
             ax.plot3D(result[i][0], result[i][1], z)
